@@ -152,10 +152,10 @@ Rcpp::List fitBeta2(SEXP ySEXP, SEXP xSEXP, SEXP nfSEXP, SEXP alpha_hatSEXP, SEX
 		alpha_mu[c] *= alpha_hat.row(i)[c];
 	}
     w = diagmat(mu_hat/(1.0 + alpha_mu));
-    hat_matrix = sqrt(w) * x * (x.t() * w * x + ridge).i(true) * x.t() * sqrt(w);
+    hat_matrix = sqrt(w) * x * (x.t() * w * x + ridge).i() * x.t() * sqrt(w);
     hat_diagonals.row(i) = diagvec(hat_matrix).t();
     // sigma is the covariance matrix for the betas
-    sigma = (x.t() * w * x + ridge).i(true) * x.t() * w * x * (x.t() * w * x + ridge).i(true);
+    sigma = (x.t() * w * x + ridge).i() * x.t() * w * x * (x.t() * w * x + ridge).i();
     contrast_num.row(i) = contrast.t() * beta_hat;
     contrast_denom.row(i) = sqrt(contrast.t() * sigma * contrast);
     beta_var_mat.row(i) = diagvec(sigma).t();
